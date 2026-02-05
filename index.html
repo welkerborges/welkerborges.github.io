@@ -1,1 +1,409 @@
-Olá Mundo
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welker | Backend Developer</title>
+    
+    <!-- FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================
+           1. VARIÁVEIS E TEMA
+           ========================================== */
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-color: #4f46e5;
+            --accent-glow: rgba(79, 70, 229, 0.4);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        /* ==========================================
+           2. RESET E CONFIGURAÇÕES GERAIS
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Deslize suave entre seções */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Efeito de iluminação de fundo */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(99, 102, 241, 0.1) 0%, transparent 40%);
+        }
+
+        /* ==========================================
+           3. NAVEGAÇÃO (HEADER)
+           ========================================== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-code);
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* ==========================================
+           4. COMPONENTES REUTILIZÁVEIS
+           ========================================== */
+        section {
+            min-height: 100vh;
+            padding: 8rem 2rem 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px -10px var(--accent-glow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -10px var(--accent-glow);
+        }
+
+        /* ==========================================
+           5. SEÇÃO HERO (INÍCIO)
+           ========================================== */
+        .hero {
+            align-items: flex-start;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1.2s ease forwards;
+        }
+
+        /* ==========================================
+           6. SEÇÃO SOBRE (TERMINAL)
+           ========================================== */
+        .terminal-window {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            background: #161b22;
+            padding: 0.75rem 1rem;
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .terminal-body {
+            padding: 2rem;
+            font-family: var(--font-code);
+            font-size: 1rem;
+            color: #c9d1d9;
+        }
+
+        /* Syntax Highlighting */
+        .code-keyword { color: #ff7b72; }
+        .code-func { color: #d2a8ff; }
+        .code-string { color: #a5d6ff; }
+        .code-comment { color: #8b949e; }
+
+        /* ==========================================
+           7. SEÇÃO STACK (CARDS)
+           ========================================== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .tech-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Linha animada no topo do card ao passar o mouse */
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .tech-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .tech-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ==========================================
+           8. ANIMAÇÕES (KEYFRAMES)
+           ========================================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================
+           9. RESPONSIVIDADE (MEDIA QUERIES)
+           ========================================== */
+        @media (max-width: 768px) {
+            header { padding: 1rem; }
+            nav ul { gap: 1rem; }
+            nav a { font-size: 0.7rem; }
+            section { padding: 6rem 1.5rem 2rem; }
+            h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ELEMENTO DE FUNDO -->
+    <div class="bg-mesh"></div>
+
+    <!-- CABEÇALHO E MENU -->
+    <header>
+        <a href="#" class="logo">WELKER<span>.io</span></a>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#stack">Stack</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <!-- SEÇÃO HERO (INÍCIO) - START -->
+        <section id="home" class="hero">
+            <div class="badge">Disponível para novos projetos</div>
+            <h1>Welker<br>Backend Developer.</h1>
+            <p>Construindo arquiteturas escaláveis, sistemas resilientes e transformando lógica complexa em APIs eficientes.</p>
+            <div class="hero-actions">
+                <a href="#" class="btn">Conheça meu trabalho</a>
+            </div>
+        </section>
+        <!-- SEÇÃO HERO - END -->
+
+        <!-- SEÇÃO SOBRE (BIO TERMINAL) - START -->
+        <section id="about">
+            <p class="section-title">Sobre mim</p>
+            <div class="terminal-window">
+                <!-- Cabeçalho estilo MacOS -->
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <!-- Conteúdo simulando código -->
+                <div class="terminal-body">
+                    <p><span class="code-comment">// Perfil Profissional</span></p>
+                    <p><span class="code-keyword">class</span> <span class="code-func">Desenvolvedor</span> {</p>
+                    <p>&nbsp;&nbsp;constructor() {</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.nome = <span class="code-string">"Welker"</span>;</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.foco = <span class="code-string">"Backend Architecture"</span>;</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.paixao = <span class="code-string">"Clean Code & Performance"</span>;</p>
+                    <p>&nbsp;&nbsp;}</p>
+                    <br>
+                    <p>&nbsp;&nbsp;<span class="code-func">getBio</span>() {</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">"Especialista em criar o 'motor' das aplicações, garantindo que tudo funcione com velocidade e segurança."</span>;</p>
+                    <p>&nbsp;&nbsp;}</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </section>
+        <!-- SEÇÃO SOBRE - END -->
+
+        <!-- SEÇÃO STACK (TECNOLOGIAS) - START -->
+        <section id="stack">
+            <p class="section-title">Minha Stack</p>
+            <h2>Tecnologias que domino</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>Python / Django</h3>
+                    <p>Desenvolvo páginas e aplicações web.</p>
+                </div>
+				<div class="tech-card">
+                    <h3>Html / Css</h3>
+                    <p>Experiencia em projetos reais, e somando ao Django fica Show</p>
+                </div>
+                <div class="tech-card">
+                    <h3>MySQL & SQL</h3>
+                    <p>Consultas, inserção, extração de dados e organização de estruturas de banco, com foco em queries simples e intermediárias.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>Cloud</h3>
+                    <p>AWS e Docker, atualmente em fase de aprendizado e prática dos principais conceitos e ferramentas</p>
+                </div>
+                <div class="tech-card">
+                    <h3>Wordpress</h3>
+                    <p>Experiencia em projetos reais, e em portifolios.</p>
+                </div>
+            </div>
+        </section>
+        <!-- SEÇÃO STACK - END -->
+
+        <!-- SEÇÃO CONTATO - START -->
+        <section id="contact" style="text-align: center; align-items: center;">
+            <p class="section-title">Vamos conversar?</p>
+            <h2>Interessado?</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary);">Estou sempre aberto para contato, ideias e projetos... sempre são bem vindos.</p>
+            <a href="mailto:welkerborges@hotmail.com" class="btn">Enviar E-mail</a>
+            
+            <!-- Redes Sociais -->
+            <div style="margin-top: 4rem; display: flex; gap: 2rem;">
+                <a href="https://github.com/welkerborges" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">GitHub</a>
+                <a href="https://www.linkedin.com/in/welker-borges-moreira/" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">LinkedIn</a>
+                
+            </div>
+        </section>
+        <!-- SEÇÃO CONTATO - END -->
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer style="padding: 2rem; text-align: center; color: var(--text-secondary); font-size: 0.8rem; border-top: 1px solid var(--border-color);">
+        &copy; 2026 Welker | Desenvolvido com HTML & CSS.
+    </footer>
+
+</body>
+</html>
